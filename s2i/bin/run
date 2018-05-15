@@ -1,0 +1,4 @@
+#!/bin/bash -e
+
+pushd $PILE2
+exec $APP_NAME

@@ -1,0 +1,26 @@
+#!/bin/bash -e
+
+if [[ "$1" == "-h" ]]; then
+	# If the 'nginx-centos7' assemble script is executed with '-h' flag,
+	# print the usage.
+	exec /usr/libexec/s2i/usage
+fi
+
+echo "Deploying Pile2"
+mkdir -p $PILE2
+mv -v -T /tmp/src $PILE2
+pushd $GOPATH
+go get -v ./...
+popd
+
+echo "Deploying Jay tool"
+go get -v github.com/blue-jay/jay
+
+echo "Building"
+pushd $PILE2
+npm install
+npm run init
+go build -v -o $APP_NAME
+popd
+
+echo "Done"
