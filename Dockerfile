@@ -2,6 +2,7 @@ FROM openshift/base-centos7
 LABEL maintainer="Anton Arapov <aarapov@redhat.com>"
 
 ENV GOPATH=$HOME/go \
+    GO111MODULE=on \
     PILE2=$HOME/go/src/github.com/arapov/pile2 \
     APP_NAME=pile2 \
     PATH=$PATH:$HOME/go/bin

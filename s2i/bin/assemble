@@ -9,18 +9,19 @@ fi
 echo "Deploying Pile2"
 mkdir -p $PILE2
 mv -v -T /tmp/src $PILE2
-pushd $GOPATH
-go get -v ./...
+pushd $PILE2
+go mod init
+go mod vendor
 popd
 
 echo "Deploying Jay tool"
-go get -v github.com/blue-jay/jay
+GO111MODULE=off go get -v github.com/blue-jay/jay # off until go v1.12
 
 echo "Building"
 pushd $PILE2
 npm install
 npm run init
-go build -v -o $APP_NAME
+go build -mod=vendor -v -o $APP_NAME
 popd
 
 echo "Done"
